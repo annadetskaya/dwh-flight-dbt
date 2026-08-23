@@ -1,0 +1,9 @@
+{
+    "dbt.queryLimit": 10,
+
+    "python.defaultInterpreterPath": "C:\\Users\\a.detskaya\\venvs\\dbt_course\\Scripts\\python.exe",
+
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\a.detskaya\\venvs\\dbt_course\\Scripts;${env:PATH}"
+    }
+}
