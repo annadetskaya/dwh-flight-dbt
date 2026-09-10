@@ -1,0 +1,64 @@
+sources:
+  - name: demo_src
+    description: Данные из БД авиаперелетов
+    tables: 
+    - name: boarding_passes
+
+    - name: flights
+      description: Рейсы
+
+      config:
+          freshness: 
+            warn_after:
+              count: 90000
+              period: hour
+            error_after:
+              count: 30000
+              period: day
+
+          loaded_at_field: actual_departure 
+
+      columns:
+        - name: flight_id
+          description: Идентификатор рейса
+
+        - name: flight_no
+          description: Номер рейса
+
+        - name: scheduled_departure
+          description: Плановое время вылета
+
+        - name: scheduled_arrival
+          description: Плановое время прибытия
+
+        - name: departure_airport
+          description: Аэропорт вылета
+
+        - name: arrival_airport
+          description: Аэропорт прибытия
+
+        - name: status
+          description: Статус рейса
+
+        - name: aircraft_code
+          description: Код самолета
+
+        - name: actual_departure
+          description: Фактическое время вылета
+
+        - name: actual_arrival
+          description: Фактическое время прибытия
+    - name: ticket_flights
+
+    - name: tickets
+        
+
+
+
+
+
+
+    
+
+
+
