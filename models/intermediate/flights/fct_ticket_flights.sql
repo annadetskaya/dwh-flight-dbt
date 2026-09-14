@@ -3,7 +3,26 @@
         materialized = 'table'
     )
 }}
+
 select
-    ticket_no, flight_id, fare_conditions, amount
-from 
-    {{ ref('stg_flights__ticket_flights') }}
+    tf.ticket_no,
+    tf.flight_id,
+    tf.fare_conditions,
+    tf.amount,
+
+    case
+        when bp.boarding_no is null then 'no'
+        else 'yes'
+    end as boarding_pass_exists,
+
+    bp.boarding_no,
+    bp.seat_no,
+    current_date as load_date
+
+from
+    {{ ref('stg_flights__ticket_flights') }} tf
+
+left join
+    {{ ref('stg_flights__boarding_passes') }} bp
+    on tf.ticket_no = bp.ticket_no
+        and tf.flight_id = bp.flight_id
