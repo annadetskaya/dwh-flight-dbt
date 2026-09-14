@@ -3,13 +3,17 @@ sources:
     description: Данные из БД авиаперелетов
     tables: 
     - name: aircrafts
-      description: Модели самолетов
+      description: '{{ doc("aircrafts_description") }}'
       columns: 
         - name: aircraft_code
           description: Код модели самолета
+          tests:
+            - not_null
+            - unique 
         - name: model
           description: Название модели самолета
         - name: range
+          description: "_Неизвестное поле_"
     - name: airports
       description: Аэропорты
       columns: 
