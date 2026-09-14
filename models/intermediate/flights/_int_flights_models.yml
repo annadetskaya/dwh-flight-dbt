@@ -1,0 +1,64 @@
+models:
+  - name: fct_booking
+    description: Факты бронирований
+    docs: 
+      show: true
+      node_color: red
+    latest_version: 1
+    versions:
+      - v: 1
+    config:
+      contract: {enforced: true}
+    meta:
+      owner: anyadetskaya@icloud.com
+
+    columns:
+      - name: book_ref
+        data_type: varchar(8)
+        constraints:
+          - type: not_null
+      - name: book_date
+        data_type: timestamptz 
+      - name: total_amount
+        data_type: numeric(10, 2) 
+        constraints:
+          - type: check
+            expression: "total_amount > 0"
+        tests:
+          - not_null  
+
+  - name: fct_ticket_flights
+    description: Билеты на самолет
+    docs: 
+      show: true
+      node_color: green
+    latest_version: 1
+    versions:
+      - v: 1
+    config:
+      contract: {enforced: true}
+    meta:
+      owner: anyadetskaya@icloud.com
+
+    columns:
+      - name: ticket_no
+        constraints:
+          - type: not_null
+        data_type: bpchar(13)
+      - name: flight_id
+        data_type: int4 
+      - name: fare_conditions
+        data_type: varchar(10)
+      - name: amount
+        data_type: numeric(10,2)
+        constraints:
+          - type: check
+            expression: "amount > 0"
+      - name: boarding_pass_exists
+        data_type: text
+      - name: boarding_no
+        data_type: int4
+      - name: seat_no
+        data_type: varchar(4)
+      - name: load_date
+        data_type: date
