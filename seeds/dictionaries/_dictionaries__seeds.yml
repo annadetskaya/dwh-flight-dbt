@@ -1,0 +1,14 @@
+seeds:
+  - name: city_region
+    description: Mapping of cities to regions and countries
+    config:
+      column_types:
+        city: varchar(50)
+        region: varchar(50)
+        country: varchar(50)
+      delimiter: ";"
+    columns:
+      - name: city
+        tests:
+          - not_null
+          - unique
