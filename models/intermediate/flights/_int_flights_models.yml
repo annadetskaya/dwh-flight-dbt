@@ -9,8 +9,7 @@ models:
       - v: 1
     config:
       contract: {enforced: true}
-    meta:
-      owner: anyadetskaya@icloud.com
+    meta: {owner: "yml_file_owner@gmail.com", status: in_dev, my_meta: new}
 
     columns:
       - name: book_ref
@@ -25,7 +24,7 @@ models:
           - type: check
             expression: "total_amount > 0"
         tests:
-          - not_null  
+          - not_null
 
   - name: fct_ticket_flights
     description: Билеты на самолет

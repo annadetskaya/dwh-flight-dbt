@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='snapshot',
-        unique_key="aircraft_code || '-' || seat_no",
+        unique_key=['aircraft_code', 'seat_no'],
 
         strategy='check',
         check_cols = ['fare_conditions'],
