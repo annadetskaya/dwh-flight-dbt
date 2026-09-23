@@ -14,3 +14,18 @@ WHERE
         BETWEEN '{{ prev_date }}'::date 
         AND '{{ current_date }}'::date
 GROUP BY scheduled_departure::date 
+
+
+{% set source_relation = adapter.get_relation(
+      database="dwh_flight_anna",
+      schema="intermediate",
+      identifier="fct_fligths")
+%}
+
+{{ source_relation }}
+{{ source_relation.database  }}
+{{ source_relation.schema  }}
+{{ source_relation.identifier  }}
+{{ source_relation.is_table  }}
+{{ source_relation.is_view  }}
+{{ source_relation.is_cte  }}
