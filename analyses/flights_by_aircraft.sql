@@ -21,8 +21,8 @@ SELECT
             THEN 1 
             ELSE 0 
         END
-    ) as flights_{{ aircraft }}
-        {%- if not loop.last %},{% endif %}
+    ) as flights_{{ aircraft|title|replace('73', 'oo') }}
+        {%- if not loop['last'] %},{% endif %}
     {% endfor %}
 FROM
     {{ ref('fct_flights') }}
