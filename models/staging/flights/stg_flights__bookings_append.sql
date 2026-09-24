@@ -7,14 +7,14 @@
 }}
 
 select 
-    "book_ref", 
+    {{ bookref_to_bigint('book_ref') }} as book_ref, 
     "book_date", 
-    "total_amount"
+    {{ cents_to_dollars(column_name='total_amount') }} as total_amount
 from {{ source('demo_src', 'bookings') }}
 {% if is_incremental() %}
-    where 
-        ('0x' || book_ref)::bigint > (
-            select max( ('0x' || book_ref)::bigint )
-            from {{ this }} -- отправляет в таблицу, которая соответствует текущей модели 
+    where
+        {{ bookref_to_bigint('book_ref') }} > (
+            select max({{ bookref_to_bigint('book_ref') }})
+            from {{ this }}
         )
 {% endif %}
