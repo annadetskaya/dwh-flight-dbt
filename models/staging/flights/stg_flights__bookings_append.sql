@@ -2,7 +2,7 @@
     config(
         materialized = 'incremental',
         incremental_strategy = 'append',
-        tags = ['bookings']
+        tags = ['bookings'], 
     )
 }}
 
@@ -11,6 +11,7 @@ select
     "book_date", 
     {{ cents_to_dollars(column_name='total_amount') }} as total_amount
 from {{ source('demo_src', 'bookings') }}
+
 {% if is_incremental() %}
     where
         {{ bookref_to_bigint('book_ref') }} > (
