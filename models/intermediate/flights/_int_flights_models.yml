@@ -23,6 +23,8 @@ models:
         constraints:
           - type: check
             expression: "total_amount > 0"
+      - name: booking_hk
+        data_type: varchar(32)
         tests:
           - not_null
 
@@ -61,3 +63,59 @@ models:
         data_type: varchar(4)
       - name: load_date
         data_type: date
+
+  - name: fct_flights
+    description: Факты по авиарейсам
+
+    columns:
+      - name: flight_id
+        description: Идентификатор рейса
+        data_type: int4
+
+      - name: flight_no
+        description: Номер рейса
+        data_type: bpchar(6)
+
+      - name: scheduled_departure
+        description: Плановое время вылета
+        data_type: timestamptz
+
+      - name: scheduled_arrival
+        description: Плановое время прибытия
+        data_type: timestamptz
+
+      - name: departure_airport_id
+        description: Код аэропорта вылета
+        data_type: bpchar(3)
+
+      - name: arrival_airport_id
+        description: Код аэропорта прибытия
+        data_type: bpchar(3)
+
+      - name: status
+        description: Статус рейса
+        data_type: varchar(20)
+
+      - name: aircraft_id
+        description: Код самолета
+        data_type: bpchar(3)
+
+      - name: actual_departure
+        description: Фактическое время вылета
+        data_type: timestamptz
+
+      - name: actual_arrival
+        description: Фактическое время прибытия
+        data_type: timestamptz
+
+      - name: load_date
+        description: Дата загрузки данных
+        data_type: date
+
+      - name: flight_info
+        description: Составной идентификатор рейса
+        data_type: text
+
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: ref('stg_flights__flights')

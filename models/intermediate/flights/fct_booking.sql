@@ -7,6 +7,7 @@
     )
 }}
 select
-    {{ show_columns_relation('stg_flights__bookings')}}
+    {{ show_columns_relation('stg_flights__bookings')}},
+    {{ dbt_utils.generate_surrogate_key(['book_ref']) }}::varchar(32) as booking_hk
 from 
     {{ ref('stg_flights__bookings') }}
