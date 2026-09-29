@@ -1,7 +1,4 @@
-13:38:48  Running with dbt=1.12.2
-13:38:49  Registered adapter: postgres=1.11.0
-13:38:51  Found 20 models, 4 snapshots, 13 analyses, 2 seeds, 7 data tests, 8 sources, 630 macros
-
+{{ config(materialized='view') }}
 
 with source as (
 

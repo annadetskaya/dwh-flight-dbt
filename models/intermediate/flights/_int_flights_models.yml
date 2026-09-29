@@ -27,6 +27,7 @@ models:
         data_type: varchar(32)
         tests:
           - not_null
+          - unique
 
   - name: fct_ticket_flights
     description: Билеты на самолет
