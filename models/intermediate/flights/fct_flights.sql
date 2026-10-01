@@ -15,20 +15,19 @@ select
     aircraft_code as aircraft_id,
     actual_departure,
     actual_arrival,
+    case
+        when actual_departure is not null and actual_arrival is not null
+        then actual_arrival - actual_departure
+        else INTERVAL '0 seconds'
+    end as actual_duration_flight,
+
+    case
+        when actual_departure is not null and scheduled_departure < actual_departure
+        then actual_departure - scheduled_departure
+        else INTERVAL '0 seconds'
+    end as flight_departure_delay,
+
     current_date as load_date,
     {{ concat_columns(['flight_id','flight_no'])}} as flight_info
 from
     {{ ref('stg_flights__flights') }}
-
-{% if execute %}
-
-    {% set statuses = dbt_utils.get_column_values(
-        table=this,
-        column='status'
-    ) %}
-
-    {% for status in statuses %}
-        {% do log("Flight status: " ~ status, info=True) %}
-    {% endfor %}
-
-{% endif %}

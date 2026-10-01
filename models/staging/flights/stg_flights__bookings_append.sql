@@ -7,7 +7,7 @@
 }}
 
 select 
-    {{ bookref_to_bigint('book_ref') }} as book_ref, 
+    book_ref, 
     "book_date", 
     {{ cents_to_dollars(column_name='total_amount') }} as total_amount
 from {{ source('demo_src', 'bookings') }}

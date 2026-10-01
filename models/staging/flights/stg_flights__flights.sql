@@ -15,7 +15,7 @@ from
     where 
         scheduled_departure >= (
             select max(scheduled_departure) - interval '100 day'
-            from {{ source('demo_src', 'flights') }}
+            from {{ this }}
         )
 
 {% endif %}

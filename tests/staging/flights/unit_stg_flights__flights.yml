@@ -1,0 +1,48 @@
+unit_tests:
+  - name: test_flights_one_new_row
+    description: "Новая строка с датой вылета 15.12.2024 должна загрузиться при наличии в модели строки от 01.01.2025"
+    model: stg_flights__flights
+    overrides:
+      macros:
+        is_incremental: true
+    given:
+      - input: source('demo_src', 'flights')
+        rows:
+          - {flight_id: 2, scheduled_departure: 2024-12-15}
+      - input: this
+        rows:
+          - {flight_id: 1, scheduled_departure: 2025-01-01}
+    expect:
+      rows:
+        - {flight_id: 2, scheduled_departure: 2024-12-15}
+  - name: test_flights_old_row
+    description: "В модели уже есть рейс от 01.01.2025. Новый рейс от 01.09.2024 не должен попасть в результат инкрементального обновления."
+    model: stg_flights__flights
+    overrides:
+      macros:
+        is_incremental: true
+    given:
+      - input: source('demo_src', 'flights')
+        rows:
+          - {flight_id: 2, scheduled_departure: 2024-09-01}
+      - input: this
+        rows:
+          - {flight_id: 1, scheduled_departure: 2025-01-01}
+    expect:
+      rows: []
+  - name: test_flights_existing_flight_with_updated_status
+    description: "В модели уже есть рейс. Новая строка с тем же flight_id и измененным status должна попасть в результат инкрементального обновления."
+    model: stg_flights__flights
+    overrides:
+      macros:
+        is_incremental: true
+    given:
+      - input: source('demo_src', 'flights')
+        rows:
+          - {flight_id: 1, scheduled_departure: 2025-01-01, status: Arrived}
+      - input: this
+        rows:
+          - {flight_id: 1, scheduled_departure: 2025-01-01, status: Scheduled}
+    expect:
+      rows:
+        - {flight_id: 1, scheduled_departure: 2025-01-01, status: Arrived}
